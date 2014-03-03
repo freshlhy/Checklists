@@ -1,30 +1,34 @@
 //
-//  AddItemViewController.m
+//  ItemViewController.m
 //  Checklists
 //
 //  Created by freshlhy on 14-3-1.
 //  Copyright (c) 2014年 freshlhy. All rights reserved.
 //
 
-#import "AddItemViewController.h"
+#import "ItemViewController.h"
 #import "ChecklistItem.h"
 
-@interface AddItemViewController ()
+@interface ItemViewController ()
 
 @end
 
-@implementation AddItemViewController
+@implementation ItemViewController
 
 - (IBAction)cancel {
-    [self.delegate addItemViewControllerDidCancel:self];
+    [self.delegate itemViewControllerDidCancel:self];
 }
 
 - (IBAction)done {
-    ChecklistItem *item = [[ChecklistItem alloc] init];
-    item.text = self.textField.text;
-    item.checked = NO;
-    
-    [self.delegate addItemViewController:self didFinishAddingItem:item];
+    if (self.itemToEdit == nil) {
+        ChecklistItem *item = [[ChecklistItem alloc] init];
+        item.text = self.textField.text;
+        item.checked = NO;
+        [self.delegate itemViewController:self didFinishAddingItem:item];
+    } else {
+        self.itemToEdit.text = self.textField.text;
+        [self.delegate itemViewController:self didFinishEditingItem:self.itemToEdit];
+    }
 }
 
 
@@ -32,6 +36,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+        
     }
     return self;
 }
@@ -39,6 +44,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.itemToEdit != nil) {
+        self.title = @"Edit Item";
+        self.textField.text = self.itemToEdit.text;
+        self.doneBarButton.enabled = YES;
+    }
  
 }
 
