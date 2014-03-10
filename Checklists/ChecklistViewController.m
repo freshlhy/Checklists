@@ -6,14 +6,15 @@
 //  Copyright (c) 2014年 freshlhy. All rights reserved.
 //
 
-#import "ChecklistsViewController.h"
+#import "ChecklistViewController.h"
 #import "ChecklistItem.h"
+#import "Checklist.h"
 
-@interface ChecklistsViewController ()
+@interface ChecklistViewController ()
 
 @end
 
-@implementation ChecklistsViewController
+@implementation ChecklistViewController
 
 {
     NSMutableArray *_items;
@@ -60,6 +61,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = self.checklist.name;
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,7 +78,6 @@
                 withChecklistItem:(ChecklistItem *)item
 {
     UILabel *label = (UILabel *)[cell viewWithTag:1001];
-    label.text = item.text;
     if (item.checked) {
         label.text = @"√";
     } else {
@@ -120,12 +121,14 @@
 // delete
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [_items removeObjectAtIndex:indexPath.row];
     
     [self saveChecklistItems];
     
     NSArray *indexPaths = @[indexPath];
     [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 }
 
 
@@ -144,10 +147,12 @@
     }
     
     if ([segue.identifier isEqualToString:@"EditItem"]) {
+        
         controller.delegate = self;
         
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         controller.itemToEdit = _items[indexPath.row];
+        
     }
 }
 
