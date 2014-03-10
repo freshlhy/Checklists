@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ItemViewController.h"
+#import "ItemDetailViewController.h"
 
 @class Checklist;
 
-@interface ChecklistViewController : UITableViewController <ItemViewControllerDelegate>
+@interface ChecklistViewController : UITableViewController <ItemDetailViewControllerDelegate>
 
 @property (nonatomic, strong) Checklist *checklist;
 

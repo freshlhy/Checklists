@@ -138,7 +138,7 @@
     
     UINavigationController *navigationController = segue.destinationViewController;
     
-    ItemViewController *controller = (ItemViewController *)navigationController.topViewController;
+    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
     
     
     if ([segue.identifier isEqualToString:@"AddItem"]) {
@@ -156,7 +156,7 @@
     }
 }
 
-- (void)itemViewControllerDidCancel:(ItemViewController *)controller {
+- (void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -172,7 +172,7 @@
     
 }
 
-- (void)itemViewController:(ItemViewController *)controller didFinishAddingItem:(ChecklistItem *)item {
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item {
     
     [self addItem:item];
     
@@ -184,7 +184,7 @@
 
 // editing existing checklist items
 
-- (void)itemViewController:(ItemViewController *)controller didFinishEditingItem:(ChecklistItem *)item {
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item {
     
     NSInteger index = [_items indexOfObject:item];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];

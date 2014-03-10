@@ -134,9 +134,30 @@
     if ([segue.identifier isEqualToString:@"ShowChecklist"]) {
         ChecklistViewController *controller = segue.destinationViewController;
         controller.checklist = sender;
+    } else if ([segue.identifier isEqualToString:@"AddChecklist"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        
+        ListDetailViewController *controller = (ListDetailViewController *)navigationController.topViewController;
+        
+        controller.delegate = self;
+        controller.checklistToEdit = nil;
     }
 }
 
- 
+- (void)listDetailViewControllerDidCancel:(ListDetailViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)listDetailViewController:(ListDetailViewController *)controller
+        didFinishAddingChecklist:(Checklist *)checklist {
+    NSInteger newRowIndex = [_lists count];
+    [_lists addObject:checklist];
+    NSIndexPath *indexPath = [NSIndexPath
+                              indexPathForRow:newRowIndex inSection:0];
+    NSArray *indexPaths = @[indexPath];
+    [self.tableView insertRowsAtIndexPaths:indexPaths
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
