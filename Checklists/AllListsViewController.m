@@ -18,15 +18,6 @@
 
 @implementation AllListsViewController
 
-//- (id) initWithCoder:(NSCoder *)aDecoder {
-//    if ((self = [super initWithCoder:aDecoder])) {
-//        [self loadChecklists];
-//    }
-//    
-//    return self;
-//    
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -67,6 +58,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row forKey:@"ChecklistIndex"];
     
     Checklist *checklist = self.dataModel.lists[indexPath.row];
     
@@ -135,5 +128,7 @@
     cell.textLabel.text = checklist.name;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 @end
